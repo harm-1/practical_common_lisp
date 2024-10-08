@@ -1,4 +1,10 @@
-(defvar *db* nil)
+;; (defvar *db* nil)
+(defvar *db* '((:TITLE "Lyle Lovett" :ARTIST "Lyle Lovett" :RATING 9 :RIPPED T)
+              (:TITLE "Give Us a Break" :ARTIST "Limpopo" :RATING 10 :RIPPED T)
+              (:TITLE "Rockin' the Suburbs" :ARTIST "Ben Folds" :RATING 6 :RIPPED T)
+              (:TITLE "Home" :ARTIST "Dixie Chicks" :RATING 9 :RIPPED T)
+              (:TITLE "Fly" :ARTIST "Dixie Chicks" :RATING 8 :RIPPED T)
+              (:TITLE "Roses" :ARTIST "Kathy Mattea" :RATING 9 :RIPPED T)))
 
 (defun make-cd (title artist rating ripped)
   (list :title title :artist artist :rating rating :ripped ripped))
@@ -36,3 +42,8 @@
   (with-open-file (in filename)
     (with-standard-io-syntax
       (setf *db* (read in)))))
+
+(defun select-by-artist (artist)
+  (remove-if-not
+   #'(lambda (cd) (equal (getf cd :artist) artist))
+   *db*))
